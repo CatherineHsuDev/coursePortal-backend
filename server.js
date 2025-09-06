@@ -9,8 +9,8 @@ const courseRoute = require("./routes").course;
 const passport = require("passport");
 require("./config/passport")(passport);
 const cors = require("cors");
-const path = require("path");
-const port = process.env.PORT || 8080;
+// const path = require("path");
+const port = process.env.PORT || 4000;
 
 // 連結mongoDB
 mongoose
@@ -26,7 +26,7 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.static(path.join(__dirname, "client", "dist")));
+// app.use(express.static(path.join(__dirname, "client", "dist")));
 
 // http://localhost:8080/api/user
 // authRoute --> ./routes --> index.js --> auth: require("./auth") --> router.get("/testAPI", (req, res)
@@ -47,15 +47,19 @@ app.use(
 // 驗證手上的json web token是有效的token
 // 驗證通過才能註冊或新增課程
 
-if (
-  process.env.NODE_ENV === "production" ||
-  process.env.NODE_ENV === "staging"
-) {
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-  });
-}
+// if (
+//   process.env.NODE_ENV === "production" ||
+//   process.env.NODE_ENV === "staging"
+// ) {
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+//   });
+// }
+
+app.get("/", (req, res) => {
+  res.send("home page");
+});
 
 app.listen(port, () => {
-  console.log(`server running at port 8080`);
+  console.log(`server running at port 4000`);
 });
